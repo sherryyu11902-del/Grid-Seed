@@ -66,7 +66,7 @@
 | **English** | **中文** |
 |-------------|----------|
 | Upload your screen recording to **YouTube** and link it here for reviewers. **Project demo:** | 请将屏幕录制 **上传至 YouTube**，并把链接放在 README 中供评阅。**本项目演示链接：** |
-| 👉 [**GridSeed — project video on YouTube**](https://youtu.be/SJhbgNIRQWg?si=bapGSPzX-HwuL5NX) | 👉 [**GridSeed 项目演示视频（YouTube）**](https://youtu.be/SJhbgNIRQWg?si=bapGSPzX-HwuL5NX) |
+| 👉 [**GridSeed — project video on YouTube**](https://youtu.be/SJhbgNIRQWg?si=bapGSPzX-HwuL5NX) | 👉 [**GridSeed 项目演示视频（YouTube）**](https://youtu.be>SJhbgNIRQWg?si=bapGSPzX-HwuL5NX) |
 
 ---
 
@@ -74,10 +74,10 @@
 
 | **English** | **中文** |
 |-------------|----------|
-| After enabling **Settings → Pages** (source: branch **`main`**, folder **`/`**), you can open: | 在仓库 **Settings → Pages** 中启用站点（分支 **`main`**，目录 **`/`** 根目录）后，可直接访问： |
+| After enabling **Settings → Pages** (source: branch **`main`**, folder **`/`**), you can open: | 在仓库 **Settings → Pages** 中启用站点（分行 **`main`**，目录 **`/`** 根目录）后，可直接访问： |
 | **Plugin panel (`index.html`):** [https://sherryyu11902-del.github.io/Grid-Seed/index.html](https://sherryyu11902-del.github.io/Grid-Seed/index.html) | **插件面板（`index.html`）：** [https://sherryyu11902-del.github.io/Grid-Seed/index.html](https://sherryyu11902-del.github.io/Grid-Seed/index.html) |
 | **Keynote deck:** [https://sherryyu11902-del.github.io/Grid-Seed/gridseed-keynote-presentation.html](https://sherryyu11902-del.github.io/Grid-Seed/gridseed-keynote-presentation.html) | **演示稿（keynote）：** [https://sherryyu11902-del.github.io/Grid-Seed/gridseed-keynote-presentation.html](https://sherryyu11902-del.github.io/Grid-Seed/gridseed-keynote-presentation.html) |
-| *If you see **404**, push all files to `main`, enable Pages, wait 1–3 minutes; GitHub may lowercase the repo segment in the URL.* | *若出现 **404**，请确认已推送到 `main`、已开启 Pages，并等待 1–3 分钟；URL 中的仓库名可能会被转为小写。* |
+| *If you see **404**, push all files to `main`, enable Pages, wait 1–3 minutes; GitHub may lowercase the repo segment in the URL.* | *若出现 **404**，请确认已推送到 `main`、已开启 Pages，并等待 1～3 分钟；URL 中的仓库名可能会被转为小写。* |
 
 ---
 
@@ -104,7 +104,7 @@ cd Grid-Seed
 
 # Local server / 本地服务（Python 3）
 python3 -m http.server 8765
-# Panel UI preview · 插件面板预览：" http://localhost:8765/index.html
+# Panel UI preview · 插件面板预览： http://localhost:8765/index.html
 # Keynote deck · 演示稿：           http://localhost:8765/gridseed-keynote-presentation.html
 ```
 
@@ -119,10 +119,10 @@ python3 -m http.server 8765
 | **Words:** generate placeholder text, then edit manually for final copy. | **Words：** 生成占位文案后，再人工润色为终稿。 |
 | **Bilingual:** use top bar **English / 中文** in the panel; keynote uses **中文 / English**. | **双语：** 面板顶栏切换 **English / 中文**；演示页顶栏为 **中文 / English**。 |
 
-**Illustrator-side dispatch（宿主侧调用示意）** — UI builds payloads; `main.js` calls:
+**Illustrator-side dispatch（宿主侧调用示意）** — UI builds payloads; `js/gridseed-panel.js` calls:
 
 ```javascript
-// Simplified pattern / 简化示意 — real code in js/main.js
+// Simplified pattern / 简化示意 — see js/gridseed-panel.js (runDispatch)
 cs.evalScript('gridseed_dispatch("' + escapedPayload + '")', callback);
 ```
 
@@ -135,8 +135,8 @@ cs.evalScript('gridseed_dispatch("' + escapedPayload + '")', callback);
 | `CSXS/manifest.xml` | CEP manifest: bundle id, host ILST, panel UI geometry, `index.html` + `jsx/hostscript.jsx`. | CEP 清单：扩展 ID、Illustrator 主机、面板尺寸、`index.html` 与 `jsx/hostscript.jsx`。 |
 | `index.html` | Panel shell: tabs (Templates / Grids / Words / Learn / About), Grid Composer, `data-i18n` hooks. | 面板外壳：各标签页、Grid Composer、`data-i18n` 绑定。 |
 | `css/style.css` | Panel styling (no external webfonts by design for CEP reliability). | 面板样式（为避免 CEP 限制未使用外联 Web 字体）。 |
-| `js/main.js` | Host bridge, template/grid UI, `runDispatch` → ExtendScript. | 与宿主通信、界面逻辑、`runDispatch` 调用 ExtendScript。 |
-| `js/gridseed-panel.js` | Panel-specific behaviours (composer, previews). | 面板行为（编排器、预览等）。 |
+| `js/main.js` | Optional / legacy helpers (panel entry is `gridseed-panel.js`). | 可选或旧版脚本（面板主逻辑在 `gridseed-panel.js`）。 |
+| `js/gridseed-panel.js` | Main panel logic: composer, `runDispatch` → ExtendScript, tabs, previews. | 面板主逻辑：编排器、`runDispatch`、标签页与预览等。 |
 | `js/layout-preview.js` | Layout preview helpers. | 版式预览辅助逻辑。 |
 | `js/data.js` | Categories, templates, presets, copy for **Words**. | 分类、模板、预设与 Words 数据。 |
 | `js/i18n.js` | Bilingual strings & DOM application. | 中英文字符串与 DOM 更新。 |
@@ -207,6 +207,23 @@ cs.evalScript('gridseed_dispatch("' + escapedPayload + '")', callback);
 | 📝 **Words** — Placeholder copy generation tuned to layout rhythm (refine in-app). | 📝 **Words** — 与网格节奏协调的占位文案生成（可在面板内继续打磨）。 |
 | 🌐 **Bilingual UI** — **English / 中文** toggle in the panel (`js/i18n.js`, `data-i18n`); keynote page also switches language. | 🌐 **双语界面** — 面板顶部 **English / 中文**（`js/i18n.js`）；演示网页同样可切换语言。 |
 | 📊 **Web deck & GitHub Pages** — Full-screen slides + speaker notes in `gridseed-keynote-presentation.html` + `presentation-assets/`. | 📊 **网页演示与 GitHub Pages** — `gridseed-keynote-presentation.html` 与 `presentation-assets/` 提供全屏幻灯片与讲稿区。 |
+
+---
+
+## 📤 Sync README to GitHub · 将本 README 同步到远程仓库
+
+**English:** After editing `README.md` locally, commit and push so GitHub shows the latest version and GitHub Pages picks up any linked files on `main`.
+
+**中文：** 在本地改好 `README.md` 后执行提交并推送，GitHub 首页说明才会更新；Pages 仍使用 `main` 根目录下的静态文件。
+
+```bash
+cd "/path/to/Grid-Seed"   # 换成你的项目根目录
+git add README.md
+git commit -m "docs: update README"
+git push origin main
+```
+
+若要连同 **`js/`、`css/`、`index.html`** 等一并推送：`git add -A`，再 `commit` / `push`（注意 `.gitignore` 会排除大文件）。
 
 ---
 
