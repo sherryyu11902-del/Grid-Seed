@@ -1,0 +1,1659 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>GridSeed — User Guide Keynote</title>
+  <!--
+    本文件：gridseed-keynote-presentation.html（课程/指南网页演示稿）
+    不是 index.html —— index.html 是 Illustrator 插件面板，二者分开维护。
+    — 放映区：presentation-assets/*.jpg
+    — 语言栏下方：YouTube 演示外链（keynote-video-bar）
+    — 讲稿区：可直接改下方 HTML
+  -->
+  <style>
+    /* 对齐插件 css/style.css 的 HUD 色系 */
+    :root {
+      --void: #030508;
+      --deep: #070b14;
+      --surface: #0c1220;
+      --border: rgba(0, 240, 255, 0.12);
+      --border-bright: rgba(0, 240, 255, 0.35);
+      --text: #e6f4ff;
+      --muted: #7a8fa3;
+      --cyan: #00f0ff;
+      --violet: #a78bfa;
+      --focus: #38bdf8;
+      --font-ui: system-ui, -apple-system, "SF Pro Text", "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+      --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+      --slide-duration: 0.42s;
+    }
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: var(--font-ui);
+      font-size: 15px;
+      line-height: 1.55;
+      color: var(--text);
+      background: var(--void);
+      -webkit-font-smoothing: antialiased;
+    }
+    .app-bg {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      background:
+        radial-gradient(ellipse 120% 80% at 50% -20%, rgba(0, 240, 255, 0.08), transparent 50%),
+        radial-gradient(ellipse 80% 50% at 100% 100%, rgba(167, 139, 250, 0.06), transparent 45%),
+        linear-gradient(180deg, var(--void) 0%, var(--deep) 100%);
+    }
+    .app-bg::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      opacity: 0.35;
+      background-image:
+        linear-gradient(rgba(0, 240, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 240, 255, 0.03) 1px, transparent 1px);
+      background-size: 24px 24px;
+      mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, black 20%, transparent 75%);
+    }
+    .app-bg::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: radial-gradient(ellipse 55% 45% at 50% 50%, transparent 40%, rgba(0, 0, 0, 0.5) 100%);
+      opacity: 0.55;
+    }
+
+    /* —— 最顶：中英界面 —— */
+    .lang-topbar {
+      position: relative;
+      z-index: 8;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px 20px;
+      padding: 10px 18px;
+      background: rgba(3, 5, 10, 0.97);
+      border-bottom: 1px solid rgba(0, 240, 255, 0.18);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
+    }
+    .lang-topbar__label {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .lang-seg {
+      display: inline-flex;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      overflow: hidden;
+      background: rgba(12, 18, 32, 0.85);
+    }
+    .lang-seg button {
+      font: inherit;
+      font-size: 13px;
+      font-weight: 500;
+      padding: 9px 22px;
+      border: none;
+      background: transparent;
+      color: var(--muted);
+      cursor: pointer;
+      transition: color 0.2s ease, background 0.2s ease;
+    }
+    .lang-seg button:hover {
+      color: var(--text);
+    }
+    .lang-seg button.is-on {
+      background: linear-gradient(
+        135deg,
+        rgba(0, 240, 255, 0.22),
+        rgba(167, 139, 250, 0.16)
+      );
+      color: var(--text);
+      box-shadow: inset 0 0 0 1px rgba(0, 240, 255, 0.2);
+    }
+
+    /* —— 演示视频：仅外链，新标签页打开 YouTube —— */
+    .keynote-video-bar {
+      position: relative;
+      z-index: 4;
+      padding: 12px 18px;
+      text-align: center;
+      border-bottom: 1px solid rgba(0, 240, 255, 0.14);
+      background: rgba(7, 11, 18, 0.96);
+    }
+    .keynote-video-bar__link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 11px 22px;
+      border-radius: 999px;
+      font-size: 14px;
+      font-weight: 650;
+      text-decoration: none;
+      color: #fff !important;
+      background: linear-gradient(135deg, #e11, #ff2d44 50%, #b80016);
+      box-shadow: 0 8px 28px rgba(225, 17, 17, 0.35);
+      transition: transform 0.2s var(--ease-out-expo), box-shadow 0.2s;
+    }
+    .keynote-video-bar__link:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 12px 36px rgba(225, 17, 17, 0.45);
+      color: #fff !important;
+    }
+    .keynote-video-bar__link:focus-visible {
+      outline: 2px solid var(--focus);
+      outline-offset: 3px;
+    }
+
+    html[data-keynote-lang="en"] .script-card .zh {
+      display: none !important;
+    }
+    html[data-keynote-lang="zh"] .script-card .en {
+      display: none !important;
+    }
+    html[data-keynote-lang="en"] .script-wrap .script-lead-zh {
+      display: none !important;
+    }
+    html[data-keynote-lang="zh"] .script-wrap .script-lead-en {
+      display: none !important;
+    }
+    html[data-keynote-lang="en"] .script-wrap header .script-kicker,
+    html[data-keynote-lang="en"] .script-wrap header .script-title {
+      display: none !important;
+    }
+    html[data-keynote-lang="zh"] .script-wrap header .script-kicker-en,
+    html[data-keynote-lang="zh"] .script-wrap header .script-title-en {
+      display: none !important;
+    }
+    .script-wrap header .script-kicker-en {
+      margin: 0 0 8px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--cyan);
+    }
+    .script-wrap header .script-title-en {
+      margin: 0 0 14px;
+      font-size: 28px;
+      font-weight: 600;
+      letter-spacing: -0.03em;
+      color: var(--text);
+    }
+
+    .visually-hidden {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+    .deck-shell {
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    .deck-chrome {
+      flex-shrink: 0;
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.6fr) minmax(0, 1.1fr);
+      align-items: center;
+      gap: 12px 16px;
+      padding: 14px 18px;
+      border-bottom: 1px solid var(--border);
+      background: linear-gradient(180deg, rgba(12, 18, 32, 0.97) 0%, rgba(7, 11, 20, 0.92) 100%);
+      box-shadow: 0 1px 0 rgba(0, 240, 255, 0.06);
+    }
+    @media (max-width: 720px) {
+      .deck-chrome {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+      .chrome-side--left,
+      .chrome-side--right {
+        justify-content: center;
+      }
+    }
+    .chrome-side--left {
+      display: flex;
+      align-items: center;
+      min-width: 0;
+    }
+    .chrome-side--right {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 8px;
+      flex-wrap: wrap;
+      min-width: 0;
+    }
+    .chrome-center {
+      min-width: 0;
+      text-align: center;
+      padding: 0 8px;
+    }
+    .slide-eyebrow {
+      margin: 0 0 2px;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(0, 240, 255, 0.75);
+    }
+    .slide-headline {
+      margin: 0;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text);
+      line-height: 1.35;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      transition: opacity 0.35s var(--ease-out-expo);
+    }
+    @media (max-width: 720px) {
+      .slide-headline { white-space: normal; }
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .brand-mark {
+      width: 36px;
+      height: 36px;
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
+    }
+    .brand-mark__inner {
+      width: 26px;
+      height: 26px;
+      background: linear-gradient(135deg, var(--cyan) 0%, var(--violet) 100%);
+      clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+      box-shadow: 0 0 18px rgba(0, 240, 255, 0.28);
+      animation: brand-breathe 5s ease-in-out infinite;
+    }
+    @keyframes brand-breathe {
+      0%, 100% { filter: brightness(1); box-shadow: 0 0 18px rgba(0, 240, 255, 0.28); }
+      50% { filter: brightness(1.08); box-shadow: 0 0 26px rgba(0, 240, 255, 0.38); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .brand-mark__inner { animation: none; }
+    }
+    .brand-title {
+      margin: 0;
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+    }
+    .brand-title span { color: var(--muted); font-weight: 500; }
+    .deck-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+    .deck-actions button {
+      font-family: inherit;
+      font-size: 12px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(17, 26, 46, 0.85);
+      color: var(--text);
+      cursor: pointer;
+    }
+    .deck-actions button:hover {
+      border-color: var(--border-bright);
+      color: var(--cyan);
+    }
+    .deck-actions button:focus-visible {
+      outline: 2px solid var(--focus);
+      outline-offset: 2px;
+    }
+    .btn-icon {
+      width: 34px;
+      height: 34px;
+      padding: 0 !important;
+      display: inline-grid;
+      place-items: center;
+      font-weight: 600;
+      font-size: 14px;
+    }
+    .deck-meta {
+      font-size: 12px;
+      color: var(--muted);
+      font-variant-numeric: tabular-nums;
+      min-width: 4.5rem;
+      text-align: right;
+      transition: color 0.3s var(--ease-out-expo), opacity 0.3s var(--ease-out-expo);
+    }
+
+    .deck-stage {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px 20px 88px;
+      position: relative;
+    }
+    /* 叠层放映：用 opacity/transform 过渡，避免 display:none 导致动画无法插值 */
+    .deck-stack {
+      position: relative;
+      width: 100%;
+      max-width: 1280px;
+      margin: 0 auto;
+      aspect-ratio: 16 / 9;
+    }
+    .slide {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      opacity: 0;
+      transform: scale(0.986) translateY(6px);
+      pointer-events: none;
+      z-index: 1;
+      transition:
+        opacity var(--slide-duration) var(--ease-out-expo),
+        transform var(--slide-duration) var(--ease-out-expo);
+    }
+    .slide.is-active {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+      pointer-events: auto;
+      z-index: 2;
+      will-change: opacity, transform;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      :root { --slide-duration: 0.09s; }
+      .slide {
+        transform: none;
+        transition: opacity var(--slide-duration) ease;
+      }
+      .slide.is-active {
+        transform: none;
+        will-change: auto;
+      }
+      .progress-fill {
+        transition: width var(--slide-duration) ease;
+      }
+    }
+    .slide figure {
+      margin: 0;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      box-shadow:
+        0 24px 80px rgba(0, 0, 0, 0.55),
+        0 0 0 1px rgba(0, 240, 255, 0.04);
+      background: #000;
+    }
+    .slide figure::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      border-radius: inherit;
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+      z-index: 2;
+    }
+    .slide figure::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      background: linear-gradient(
+        105deg,
+        rgba(12, 18, 32, 0.95) 0%,
+        rgba(22, 34, 54, 0.98) 45%,
+        rgba(12, 18, 32, 0.95) 90%
+      );
+      background-size: 200% 100%;
+      animation: shimmer 1.35s ease-in-out infinite;
+      opacity: 1;
+      transition: opacity 0.5s var(--ease-out-expo);
+      pointer-events: none;
+    }
+    .slide figure.is-loaded::before {
+      opacity: 0;
+      animation: none;
+    }
+    .slide figure.has-error::before {
+      opacity: 1;
+      animation: none;
+      background: rgba(60, 20, 30, 0.85);
+    }
+    @keyframes shimmer {
+      0% { background-position: 120% 0; }
+      100% { background-position: -120% 0; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .slide figure::before { animation: none; opacity: 0.35; }
+      .slide figure.is-loaded::before { opacity: 0; }
+    }
+    .slide img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      vertical-align: middle;
+      position: relative;
+      z-index: 0;
+      opacity: 0;
+      transition: opacity 0.45s var(--ease-out-expo);
+    }
+    .slide figure.is-loaded img {
+      opacity: 1;
+    }
+    .filmstrip-scroll {
+      max-width: min(1040px, 100%);
+      margin: 0 auto 12px;
+      padding: 6px 8px 10px;
+      overflow-x: auto;
+      overflow-y: hidden;
+      -webkit-overflow-scrolling: touch;
+      scroll-behavior: smooth;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(0, 240, 255, 0.35) transparent;
+    }
+    .filmstrip-scroll::-webkit-scrollbar {
+      height: 5px;
+    }
+    .filmstrip-scroll::-webkit-scrollbar-thumb {
+      background: rgba(0, 240, 255, 0.28);
+      border-radius: 999px;
+    }
+    .filmstrip {
+      display: flex;
+      gap: 10px;
+      padding: 4px 6px;
+      width: max-content;
+      margin: 0 auto;
+    }
+    .filmstrip button {
+      flex: 0 0 auto;
+      width: 100px;
+      height: 56px;
+      padding: 0;
+      border: 2px solid transparent;
+      border-radius: 8px;
+      overflow: hidden;
+      cursor: pointer;
+      background: #000;
+      opacity: 0.52;
+      scroll-snap-align: center;
+      transition:
+        opacity 0.3s var(--ease-out-expo),
+        border-color 0.3s var(--ease-out-expo),
+        transform 0.3s var(--ease-out-expo),
+        box-shadow 0.3s var(--ease-out-expo);
+    }
+    .filmstrip button img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      pointer-events: none;
+    }
+    .filmstrip button:hover {
+      opacity: 0.9;
+    }
+    .filmstrip button:focus-visible {
+      outline: 2px solid var(--focus);
+      outline-offset: 2px;
+    }
+    .filmstrip button[aria-current="true"] {
+      opacity: 1;
+      border-color: rgba(0, 240, 255, 0.75);
+      box-shadow: 0 0 14px rgba(0, 240, 255, 0.25);
+      transform: translateY(-2px);
+    }
+    @media (max-width: 640px) {
+      .filmstrip button { width: 76px; height: 44px; }
+    }
+
+    .help-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 20;
+      background: rgba(3, 5, 10, 0.65);
+      backdrop-filter: blur(6px);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.35s var(--ease-out-expo);
+    }
+    .help-backdrop.is-open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .help-panel {
+      position: fixed;
+      z-index: 21;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%) scale(0.96);
+      width: min(400px, calc(100vw - 32px));
+      max-height: min(72vh, 520px);
+      overflow: auto;
+      padding: 22px 22px 18px;
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      background: linear-gradient(165deg, rgba(17, 26, 46, 0.98), rgba(7, 11, 20, 0.98));
+      box-shadow: 0 28px 100px rgba(0, 0, 0, 0.55);
+      opacity: 0;
+      pointer-events: none;
+      transition:
+        opacity 0.35s var(--ease-out-expo),
+        transform 0.35s var(--ease-out-expo);
+    }
+    .help-panel.is-open {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translate(-50%, -50%) scale(1);
+    }
+    .help-panel h4 {
+      margin: 0 0 12px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--cyan);
+    }
+    .help-panel dl {
+      margin: 0;
+      display: grid;
+      gap: 10px 16px;
+      grid-template-columns: auto 1fr;
+      font-size: 12px;
+    }
+    .help-panel dt {
+      margin: 0;
+      color: var(--muted);
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+    }
+    .help-panel dd {
+      margin: 0;
+      color: var(--text);
+    }
+    .help-panel .help-close {
+      margin-top: 16px;
+      width: 100%;
+      font: inherit;
+      font-size: 12px;
+      padding: 10px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: rgba(12, 18, 32, 0.9);
+      color: var(--text);
+      cursor: pointer;
+    }
+    .help-panel .help-close:hover {
+      border-color: var(--border-bright);
+      color: var(--cyan);
+    }
+
+    .skip-link {
+      position: fixed;
+      left: 12px;
+      top: 52px;
+      z-index: 35;
+      padding: 8px 12px;
+      font-size: 12px;
+      color: var(--void);
+      background: var(--cyan);
+      border-radius: 8px;
+      text-decoration: none;
+      transform: translateY(-140%);
+      transition: transform 0.2s var(--ease-out-expo);
+    }
+    .skip-link:focus {
+      transform: translateY(0);
+      outline: 2px solid var(--focus);
+      outline-offset: 2px;
+    }
+
+    .deck-rail {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 5;
+      padding: 12px 18px 16px;
+      background: linear-gradient(180deg, transparent, rgba(3, 5, 8, 0.94) 28%);
+      border-top: 1px solid rgba(0, 240, 255, 0.1);
+      backdrop-filter: blur(10px);
+    }
+    .progress-track {
+      height: 6px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 999px;
+      overflow: hidden;
+      margin-bottom: 12px;
+      cursor: pointer;
+      position: relative;
+      touch-action: none;
+    }
+    .progress-track:focus-visible {
+      outline: 2px solid var(--focus);
+      outline-offset: 2px;
+    }
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--cyan), var(--violet));
+      border-radius: 999px;
+      transition: width var(--slide-duration) var(--ease-out-expo);
+    }
+    .rail-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .rail-nav {
+      display: flex;
+      gap: 8px;
+    }
+    .rail-jump {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+    .rail-jump label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .rail-jump select {
+      font: inherit;
+      font-size: 12px;
+      padding: 8px 12px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: rgba(12, 18, 32, 0.95);
+      color: var(--text);
+      cursor: pointer;
+      min-width: 12rem;
+      max-width: min(70vw, 22rem);
+    }
+    .rail-jump select:focus-visible {
+      outline: 2px solid var(--focus);
+      outline-offset: 2px;
+    }
+    .rail-nav button {
+      font-family: inherit;
+      font-size: 12px;
+      padding: 8px 16px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(12, 18, 32, 0.9);
+      color: var(--text);
+      cursor: pointer;
+      transition:
+        border-color 0.28s var(--ease-out-expo),
+        color 0.28s var(--ease-out-expo),
+        opacity 0.28s var(--ease-out-expo),
+        transform 0.28s var(--ease-out-expo);
+    }
+    .rail-nav button:not(:disabled):active {
+      transform: scale(0.96);
+    }
+    .rail-nav button:disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+    }
+    .rail-nav button:not(:disabled):hover {
+      border-color: var(--border-bright);
+      color: var(--cyan);
+    }
+    .rail-dots {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      max-width: min(420px, 55vw);
+      justify-content: center;
+    }
+    .rail-dots button {
+      width: 9px;
+      height: 9px;
+      padding: 0;
+      border: none;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.2);
+      cursor: pointer;
+      transform: scale(1);
+      transition:
+        transform 0.32s var(--ease-out-expo),
+        background 0.32s var(--ease-out-expo),
+        box-shadow 0.32s var(--ease-out-expo);
+    }
+    .rail-dots button:hover {
+      background: rgba(255, 255, 255, 0.35);
+    }
+    .rail-dots button[aria-current="true"] {
+      background: var(--cyan);
+      box-shadow: 0 0 10px rgba(0, 240, 255, 0.55);
+      transform: scale(1.28);
+    }
+    .rail-hint {
+      font-size: 11px;
+      color: var(--muted);
+    }
+    @media (max-width: 640px) {
+      .rail-hint span { display: none; }
+      .deck-stage { padding-bottom: 120px; }
+      .rail-jump {
+        flex: 1 1 100%;
+        justify-content: center;
+      }
+      .rail-jump select {
+        max-width: 100%;
+      }
+    }
+
+    /* —— 可编辑：讲稿 / 课程大纲（Apple 式留白 + 插件色点缀） —— */
+    .script-wrap {
+      position: relative;
+      z-index: 1;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 48px 24px 80px;
+    }
+    .script-wrap header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    .script-wrap h2.script-kicker {
+      margin: 0 0 8px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--cyan);
+    }
+    .script-wrap h2.script-title {
+      margin: 0;
+      font-size: 28px;
+      font-weight: 600;
+      letter-spacing: -0.03em;
+      color: var(--text);
+    }
+    .script-wrap p.script-lead {
+      margin: 14px auto 0;
+      max-width: 560px;
+      color: var(--muted);
+      font-size: 15px;
+    }
+    .script-card {
+      background: rgba(12, 18, 32, 0.65);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 28px 28px 26px;
+      margin-bottom: 22px;
+    }
+    .script-card h3 {
+      margin: 0 0 14px;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--focus);
+    }
+    .script-card p, .script-card li {
+      margin: 0 0 10px;
+      color: #c5d4e3;
+      font-size: 14px;
+    }
+    .script-card ul, .script-card ol {
+      margin: 0;
+      padding-left: 1.15rem;
+    }
+    .script-card li { margin-bottom: 6px; }
+    .script-card .en { color: #dbe8f4; }
+    .script-card .zh { color: #9eb0c2; font-size: 13px; display: block; margin-top: 2px; }
+    .pill-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 14px;
+      margin-top: 8px;
+    }
+    .pill {
+      border-radius: 12px;
+      padding: 16px 16px 14px;
+      border: 1px solid rgba(0, 240, 255, 0.15);
+      background: rgba(7, 11, 20, 0.6);
+    }
+    .pill strong {
+      display: block;
+      font-size: 12px;
+      color: var(--cyan);
+      margin-bottom: 6px;
+      letter-spacing: 0.04em;
+    }
+    .pill span { font-size: 13px; color: #b8cadb; line-height: 1.45; }
+
+    .details-toggle {
+      max-width: 900px;
+      margin: 0 auto 40px;
+      padding: 0 24px;
+      position: relative;
+      z-index: 1;
+    }
+    .details-toggle summary {
+      cursor: pointer;
+      list-style: none;
+      font-size: 13px;
+      color: var(--muted);
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .details-toggle summary::-webkit-details-marker { display: none; }
+    .details-toggle summary::after {
+      content: " ▾";
+      color: var(--cyan);
+    }
+    .details-toggle[open] summary::after { content: " ▴"; }
+
+  </style>
+</head>
+<body>
+  <div class="app-bg" aria-hidden="true"></div>
+  <a class="skip-link" id="skipLink" href="#editableScript">跳到讲稿区</a>
+
+  <div class="lang-topbar" role="region" aria-label="Language">
+    <span class="lang-topbar__label" id="langTopLabel">界面语言</span>
+    <div class="lang-seg" role="group">
+      <button type="button" id="langZh" class="is-on" data-lang-set="zh" aria-pressed="true">中文</button>
+      <button type="button" id="langEn" data-lang-set="en" aria-pressed="false">English</button>
+    </div>
+  </div>
+
+  <div class="keynote-video-bar" id="keynote-demo-video" role="region" aria-label="Demo video">
+    <a
+      class="keynote-video-bar__link"
+      id="keynoteDemoVideoLink"
+      href="https://youtu.be/SJhbgNIRQWg?si=bapGSPzX-HwuL5NX"
+      target="_blank"
+      rel="noopener noreferrer"
+      >▶ 在 YouTube 观看演示视频</a
+    >
+  </div>
+
+  <div class="deck-shell" id="deckRoot">
+    <header class="deck-chrome">
+      <div class="chrome-side--left brand">
+        <div class="brand-mark" aria-hidden="true"><div class="brand-mark__inner"></div></div>
+        <div>
+          <p class="brand-title">GridSeed <span id="brandSub">· 使用指南 · 演示稿</span></p>
+        </div>
+      </div>
+      <div class="chrome-center">
+        <p class="slide-eyebrow" id="slidePart">封面</p>
+        <p class="slide-headline" id="slideTitle">封面 · GridSeed v2.3.0</p>
+      </div>
+      <div class="chrome-side--right deck-actions">
+        <span class="deck-meta" id="slideCounter" aria-live="polite">1 / 22</span>
+        <button type="button" id="btnScript">讲稿区</button>
+        <button type="button" class="btn-icon" id="btnHelp" aria-label="快捷键" title="?">?</button>
+        <button type="button" id="btnFs">全屏</button>
+      </div>
+    </header>
+
+    <main class="deck-stage" id="deckStage" aria-live="polite" aria-describedby="slideTitle slidePart">
+      <!-- 幻灯片由脚本根据 SLIDE_MANIFEST 注入 -->
+    </main>
+
+    <div class="deck-rail">
+      <div class="filmstrip-scroll" id="filmstripScroll">
+        <div class="filmstrip" id="filmstrip" role="tablist" aria-label="幻灯片缩略图"></div>
+      </div>
+      <div
+        class="progress-track"
+        id="progressTrack"
+        role="slider"
+        aria-valuemin="1"
+        aria-valuemax="22"
+        aria-valuenow="1"
+        aria-label="放映进度"
+        tabindex="0"
+      >
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+      <div class="rail-row">
+        <div class="rail-nav">
+          <button type="button" id="btnPrev">上一页</button>
+          <button type="button" id="btnNext">下一页</button>
+        </div>
+        <div class="rail-jump">
+          <label for="slideJump"
+            ><span id="jumpLabelText">跳到页码</span
+            >&nbsp;<select id="slideJump"></select
+          ></label>
+        </div>
+        <div class="rail-dots" id="railDots" role="tablist" aria-label="页码点"></div>
+        <p class="rail-hint" id="railHint"></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="help-backdrop" id="helpBackdrop" aria-hidden="true"></div>
+  <div
+    class="help-panel"
+    id="helpPanel"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="helpTitle"
+    aria-hidden="true"
+  >
+    <h4 id="helpTitle">快捷键</h4>
+    <div id="helpBody"></div>
+    <p id="helpFoot" style="margin:14px 0 0;font-size:11px;color:var(--muted);line-height:1.5"></p>
+    <button type="button" class="help-close" id="helpClose">关闭</button>
+  </div>
+
+  <details class="details-toggle" id="scriptDetails">
+    <summary id="scriptDetailsSummary">讲稿与要点（可直接编辑下方 HTML 源码）</summary>
+  <article class="script-wrap" id="editableScript">
+    <header>
+      <h2 class="script-kicker">Speaker outline</h2>
+      <h2 class="script-title">GridSeed 演示 · 可编辑讲稿</h2>
+      <p class="script-kicker-en">Speaker outline</p>
+      <p class="script-title-en">GridSeed · Editable speaker notes</p>
+      <p class="script-lead script-lead-zh">
+        上方为幻灯片放映区；语言栏下可打开 <a href="#keynote-demo-video">YouTube 演示</a>。此处为与 PDF 一致的口述要点，可在编辑器中直接修改。
+        <a href="#deckRoot">↗ 回到放映区</a>
+      </p>
+      <p class="script-lead script-lead-en">
+        The slide deck is above; use the red link under the language bar for the <a href="#keynote-demo-video">YouTube demo</a>. These notes mirror the PDF talk track—edit the HTML as needed.
+        <a href="#deckRoot">↗ Back to slides</a>
+      </p>
+    </header>
+
+    <section class="script-card">
+      <h3>初衷与命题 · Intent</h3>
+      <p class="en">GridSeed exists so every designer—especially beginners—can reach professional layout in Illustrator without hours of manual scaffolding. The intent is a guided, repeatable workflow instead of blank-artboard anxiety.</p>
+      <p class="zh">让新手也能在 Illustrator 内快速获得「专业感」版式骨架：用可复现的流程，替代从零开始画参考线、画框与零散样式。</p>
+    </section>
+
+    <section class="script-card">
+      <h3>要解决什么问题 · Problems</h3>
+      <ul>
+        <li><span class="en">Manual guides, frames, borders, shadows, and local styles built block-by-block waste time and break rhythm.</span><span class="zh">逐块手搭参考线、画框、描边与阴影，节奏慢且易乱。</span></li>
+        <li><span class="en">Beginners stall between “looking pro” and shipping; veterans repeat the same setup on every artboard.</span><span class="zh">新手卡在「显得专业」与「按时交稿」之间；熟手反复做相同前置工序。</span></li>
+        <li><span class="en">Piecemeal spacing hurts brand consistency; print workflows need bleed, trim, and safe zones—often forgotten under pressure.</span><span class="zh">零碎作业导致间距与风格不一；印刷交付易漏出血、裁切与安全区。</span></li>
+      </ul>
+    </section>
+
+    <section class="script-card">
+      <h3>现有能力一览 · Capabilities</h3>
+      <p class="en"><strong style="color:var(--cyan)">Grid Composer</strong> — themes, paper/screen formats, live preview with true aspect ratio, layout presets (golden, modular, masonry, columns), image slots with scale/gap, print-ready bleed &amp; safe margins, placement and optional PNG preview export.</p>
+      <p class="en"><strong style="color:var(--violet)">Templates &amp; Starter Kit</strong> — format chips (social, poster, editorial, custom pixels), grid levels L1–L6, cyan construction guides, trim/safe guides when bleed &gt; 0, curated Starter Kit artwork that scales with the artboard.</p>
+      <p class="zh">模板 / 网格编排器 / Starter Kit 三者闭环：从选幅面、选版式，到一键置入可编辑的构建线与成品化基础图层。</p>
+    </section>
+
+    <section class="script-card">
+      <h3>详细功能 · Deep dives（对照幻灯片 5–11、19–21）</h3>
+      <ul>
+        <li>
+          <span class="en">Orange frames mark image slots; dashed guides mirror safe layout logic from the panel.</span>
+          <span class="zh">橙色线框为图片占位；虚线区对应面板内可排版安全区逻辑。</span>
+        </li>
+        <li>
+          <span class="en">Starter Kit themes bundle color, shape language, and type stacks—not flat gray placeholders.</span>
+          <span class="zh">Starter Kit 主题整合配色、图形语汇与字体栈——不是灰色空框。</span>
+        </li>
+        <li>
+          <span class="en">Cyan grids encode column/module rhythm; lock or hide after client sign-off.</span>
+          <span class="zh">青色网格定义栏与模块节奏；定稿后可锁定或隐藏构建层。</span>
+        </li>
+        <li>
+          <span class="en">Print mode: magenta bleed, orange trim, cyan type safe zones when bleed is enabled.</span>
+          <span class="zh">印刷模式：出血为洋红示意、裁切为橙色、正文安全区为青色（启用出血时）。</span>
+        </li>
+        <li>
+          <span class="en">Architecture split: CEP HTML/JS panel ↔ JSX host in Illustrator for fast UI iteration.</span>
+          <span class="zh">架构：CEP 面板（HTML/JS）与 Illustrator JSX 宿主分离，便于界面快速迭代。</span>
+        </li>
+      </ul>
+    </section>
+
+    <section class="script-card">
+      <h3>如何使用 · Step-by-step（对照幻灯片 16）</h3>
+      <ol>
+        <li><span class="en"><strong>Install &amp; open</strong> the CEP extension via Window ▸ Extensions ▸ GridSeed.</span><span class="zh">安装扩展，必要时重启 Illustrator，从「窗口 ▸ 扩展」打开面板。</span></li>
+        <li><span class="en"><strong>Choose a path</strong> — Templates tab for chips &amp; levels, or Grid Composer for full guided builds.</span><span class="zh">选「模板」快速幅面，或「网格编排器」完整流程。</span></li>
+        <li><span class="en"><strong>Dial in settings</strong> — orientation, grid type, image slots, scale/gap; add bleed/safe for print.</span><span class="zh">设置横竖、网格、图片槽与缩放/间距；印刷任务填写出血与安全边距。</span></li>
+        <li><span class="en"><strong>Preview</strong> live in-panel; export PNG for review before placing vectors.</span><span class="zh">预览可导出 PNG 供评审。</span></li>
+        <li><span class="en"><strong>Create in Illustrator</strong> — Place / Regenerate: guides, Starter Kit, and frames land on the artboard.</span><span class="zh">置入后，参考线、Starter Kit 与占位一同上画板。</span></li>
+        <li><span class="en"><strong>Customize &amp; ship</strong> — swap imagery and type; export print PDFs or social assets.</span><span class="zh">在结构内替换内容，再按规格导出。</span></li>
+      </ol>
+    </section>
+
+    <section class="script-card">
+      <h3>演示故事线 · Demos for novice designers（对照幻灯片 17–18）</h3>
+      <ul>
+        <li><span class="en"><strong>Mood board sprint:</strong> preset first → theme second → place once → finish by swapping imagery while the grid enforces rhythm.</span><span class="zh">氛围板：先预设、再主题、一键置入，替换图片仍保持精致比例。</span></li>
+        <li><span class="en"><strong>Instagram / portfolio strips:</strong> match canvas in preview, pick modular/editorial rhythm, tweak scale/gap without redrawing frames, duplicate the recipe for carousel pages.</span><span class="zh">社交轮播 / 作品集条带：预览与画板一致，多页复制同一套间距规则。</span></li>
+      </ul>
+    </section>
+
+    <section class="script-card">
+      <h3>四条关键信息 · Key messages</h3>
+      <div class="pill-grid">
+        <div class="pill">
+          <strong>Speed · 速度</strong>
+          <span class="en">Instant professional grids replace slow, pixel-by-pixel manual frames, borders, shadows, and one-off styles.</span>
+          <span class="zh">专业网格瞬间就绪，取代逐一手动画框、描边、阴影与一次性样式。</span>
+        </div>
+        <div class="pill">
+          <strong>Quality · 质量</strong>
+          <span class="en">Consistent, polished outcomes because every scaffold ships with curated Starter Kit typography, color, and shapes.</span>
+          <span class="zh">每套网格搭配精心打磨的 Starter Kit，字体、色彩与图形一致且耐看。</span>
+        </div>
+        <div class="pill">
+          <strong>Versatility · 灵活</strong>
+          <span class="en">One plugin for mood boards, photo collages, portfolio spreads, Instagram carousels, product grids, lookbooks, editorial modules, and pitch decks.</span>
+          <span class="zh">同一插件适用于氛围板、拼贴、作品集、社交轮播、产品格、造型册、编辑版与提案等。</span>
+        </div>
+        <div class="pill">
+          <strong>Transformation · 转变</strong>
+          <span class="en">Turns traditional slow, repetitive setup into a fast, confident, high-quality workflow—from grind to design.</span>
+          <span class="zh">把缓慢、重复的前置工序变为快速、省力且高质量的流程。</span>
+        </div>
+      </div>
+    </section>
+  </article>
+  </details>
+
+  <script>
+    (function () {
+      var KEYNOTE_LANG_KEY = "gridseed-keynote-ui-lang";
+      var keynoteLang = (function () {
+        try {
+          var x = localStorage.getItem(KEYNOTE_LANG_KEY);
+          if (x === "en" || x === "zh") return x;
+        } catch (e) {}
+        return "zh";
+      })();
+      document.documentElement.setAttribute("data-keynote-lang", keynoteLang);
+      document.documentElement.lang = keynoteLang === "zh" ? "zh-Hans" : "en";
+
+      /** 可编辑：幻灯片清单（文件名相对于本 HTML） */
+      var SLIDE_MANIFEST = [
+        { src: "presentation-assets/slide-01.jpg", zh: "封面 · GridSeed v2.3.0", en: "Cover · GridSeed v2.3.0" },
+        { src: "presentation-assets/slide-02.jpg", zh: "欢迎 · 数字时代与使命", en: "Welcome · mission" },
+        { src: "presentation-assets/slide-03.jpg", zh: "核心问题 · Problems solved", en: "Problems we solve" },
+        { src: "presentation-assets/slide-04.jpg", zh: "价值主张 · 专业网格瞬间就绪", en: "Value · instant pro grids" },
+        { src: "presentation-assets/slide-05.jpg", zh: "功能地图 · Grid Composer / 模板 / Starter Kit", en: "Feature map · Composer / Templates / Starter Kit" },
+        { src: "presentation-assets/slide-06.jpg", zh: "对比 · 逐框手搓 vs 一键搭建", en: "Manual frames vs one click" },
+        { src: "presentation-assets/slide-07.jpg", zh: "实际交付 · What you get", en: "What you get" },
+        { src: "presentation-assets/slide-08.jpg", zh: "插图 · 图片占位与示意", en: "Figure · image slots" },
+        { src: "presentation-assets/slide-09.jpg", zh: "Starter Kit · 设计感来源", en: "Starter Kit · designed look" },
+        { src: "presentation-assets/slide-10.jpg", zh: "插图 · 青色构建网格", en: "Figure · cyan construction grid" },
+        { src: "presentation-assets/slide-11.jpg", zh: "插图 · Starter Kit 视觉语言", en: "Figure · Starter Kit language" },
+        { src: "presentation-assets/slide-12.jpg", zh: "一致且精致的外观", en: "Consistent polished look" },
+        { src: "presentation-assets/slide-13.jpg", zh: "灵活交付物 · 场景列举", en: "Flexible deliverables" },
+        { src: "presentation-assets/slide-14.jpg", zh: "四条关键信息", en: "Four key messages" },
+        { src: "presentation-assets/slide-15.jpg", zh: "从重复劳动到高质量交付", en: "From repetition to quality" },
+        { src: "presentation-assets/slide-16.jpg", zh: "使用步骤 · Step by step", en: "How to use · steps" },
+        { src: "presentation-assets/slide-17.jpg", zh: "演示 · 新手氛围板", en: "Demo · mood board" },
+        { src: "presentation-assets/slide-18.jpg", zh: "演示 · Instagram / 作品集", en: "Demo · Instagram / portfolio" },
+        { src: "presentation-assets/slide-19.jpg", zh: "印刷 · 出血 · 裁切 · 安全区", en: "Print · bleed · trim · safe" },
+        { src: "presentation-assets/slide-20.jpg", zh: "对比 · 传统手搭 vs GridSeed", en: "Manual setup vs GridSeed" },
+        { src: "presentation-assets/slide-21.jpg", zh: "架构 · CEP 与 JSX", en: "Architecture · CEP & JSX" },
+        { src: "presentation-assets/slide-22.jpg", zh: "结语 · Thank you", en: "Closing · thank you" }
+      ];
+
+      function slideLabel(i) {
+        var s = SLIDE_MANIFEST[i];
+        return keynoteLang === "en" ? s.en : s.zh;
+      }
+
+      var total = SLIDE_MANIFEST.length;
+
+      function parseHash() {
+        var m = /(?:^|#)(?:slide|s)=(\d+)/i.exec(location.hash);
+        if (!m) return null;
+        var n = parseInt(m[1], 10) - 1;
+        if (isNaN(n)) return null;
+        return Math.max(0, Math.min(total - 1, n));
+      }
+
+      function readInitialIndex() {
+        var h = parseHash();
+        if (h !== null) return h;
+        try {
+          var ls = parseInt(localStorage.getItem("gridseed-deck-idx"), 10);
+          if (!isNaN(ls) && ls >= 0 && ls < total) return ls;
+        } catch (err) {}
+        return 0;
+      }
+
+      function slideChapter(i) {
+        var zh;
+        var en;
+        if (i === 0) {
+          zh = "封面";
+          en = "Cover";
+        } else if (i <= 3) {
+          zh = "叙事与问题";
+          en = "Story & problems";
+        } else if (i <= 6) {
+          zh = "价值与能力";
+          en = "Value & capabilities";
+        } else if (i <= 10) {
+          zh = "功能图解";
+          en = "Feature figures";
+        } else if (i <= 14) {
+          zh = "场景与要点";
+          en = "Scenes & messages";
+        } else if (i === 15) {
+          zh = "转变";
+          en = "Shift";
+        } else if (i <= 17) {
+          zh = "指南与演示";
+          en = "Guide & demos";
+        } else if (i <= 20) {
+          zh = "印刷与架构";
+          en = "Print & architecture";
+        } else {
+          zh = "结语";
+          en = "Closing";
+        }
+        return keynoteLang === "en" ? en : zh;
+      }
+
+      var UI = {
+        zh: {
+          langLabel: "界面语言",
+          skip: "跳到讲稿区",
+          brandSub: "· 使用指南 · 演示稿",
+          btnScript: "讲稿区",
+          btnFs: "全屏",
+          btnPrev: "上一页",
+          btnNext: "下一页",
+          jumpLabel: "跳到页码",
+          helpTitle: "快捷键",
+          helpClose: "关闭",
+          scriptSummary: "讲稿与要点（可直接编辑下方 HTML 源码）",
+          demoVideoLink: "▶ 在 YouTube 观看演示视频",
+          railHint: "← → 空格 · Home/End · G 讲稿 · ? 快捷键 · F 全屏",
+          helpFoot: "进度保存在本机。分享时可使用 #s=页码（例如 #s=16）。",
+          jumpAriaSuffix: "页",
+          thumbAriaPrefix: "缩略图：第 ",
+          dotAriaPrefix: "第 ",
+          dotAriaSuffix: " 页",
+        },
+        en: {
+          langLabel: "Language",
+          skip: "Skip to notes",
+          brandSub: "· User guide · Deck",
+          btnScript: "Notes",
+          btnFs: "Fullscreen",
+          btnPrev: "Previous",
+          btnNext: "Next",
+          jumpLabel: "Go to slide",
+          helpTitle: "Shortcuts",
+          helpClose: "Close",
+          scriptSummary: "Speaker notes (edit HTML below)",
+          demoVideoLink: "▶ Watch demo on YouTube",
+          railHint: "← → Space · Home/End · G notes · ? help · F fullscreen",
+          helpFoot: "Progress is stored locally. Share links with #s=slide (e.g. #s=16).",
+          jumpAriaSuffix: "",
+          thumbAriaPrefix: "Thumbnail slide ",
+          dotAriaPrefix: "Slide ",
+          dotAriaSuffix: "",
+        },
+      };
+
+      function uiStr(key) {
+        var pack = UI[keynoteLang] || UI.zh;
+        return pack[key] || "";
+      }
+
+      function setKeynoteLang(lang) {
+        if (lang !== "zh" && lang !== "en") return;
+        keynoteLang = lang;
+        document.documentElement.setAttribute("data-keynote-lang", lang);
+        document.documentElement.lang = lang === "zh" ? "zh-Hans" : "en";
+        try {
+          localStorage.setItem(KEYNOTE_LANG_KEY, lang);
+        } catch (e) {}
+        var zhBtn = document.getElementById("langZh");
+        var enBtn = document.getElementById("langEn");
+        zhBtn.classList.toggle("is-on", lang === "zh");
+        enBtn.classList.toggle("is-on", lang === "en");
+        zhBtn.setAttribute("aria-pressed", lang === "zh");
+        enBtn.setAttribute("aria-pressed", lang === "en");
+        applyUiStrings();
+        refreshSlidesMeta();
+        applyChrome();
+      }
+
+      function applyUiStrings() {
+        var u = UI[keynoteLang] || UI.zh;
+        function setId(id, text) {
+          var el = document.getElementById(id);
+          if (el) el.textContent = text;
+        }
+        setId("langTopLabel", u.langLabel);
+        setId("skipLink", u.skip);
+        setId("brandSub", u.brandSub);
+        setId("btnScript", u.btnScript);
+        setId("btnFs", u.btnFs);
+        setId("btnPrev", u.btnPrev);
+        setId("btnNext", u.btnNext);
+        setId("jumpLabelText", u.jumpLabel);
+        setId("helpTitle", u.helpTitle);
+        setId("helpClose", u.helpClose);
+        setId("scriptDetailsSummary", u.scriptSummary);
+        setId("keynoteDemoVideoLink", u.demoVideoLink);
+        var vbar = document.getElementById("keynote-demo-video");
+        if (vbar) vbar.setAttribute("aria-label", keynoteLang === "en" ? "Demo video" : "演示视频");
+        setId("railHint", u.railHint);
+        setId("helpFoot", u.helpFoot);
+        var bh = document.getElementById("btnHelp");
+        if (bh) bh.setAttribute("aria-label", keynoteLang === "en" ? "Keyboard shortcuts" : "快捷键");
+        var hb = document.getElementById("helpBody");
+        if (hb) {
+          hb.innerHTML =
+            "<dl>" +
+            "<dt>" +
+            (keynoteLang === "en" ? "→ / Space" : "→ / 空格") +
+            "</dt><dd>" +
+            (keynoteLang === "en" ? "Next slide" : "下一页") +
+            "</dd>" +
+            "<dt>←</dt><dd>" +
+            (keynoteLang === "en" ? "Previous" : "上一页") +
+            "</dd>" +
+            "<dt>Home / End</dt><dd>" +
+            (keynoteLang === "en" ? "First / last slide" : "首页 / 末页") +
+            "</dd>" +
+            "<dt>G</dt><dd>" +
+            (keynoteLang === "en" ? "Scroll to notes" : "跳到讲稿") +
+            "</dd>" +
+            "<dt>?</dt><dd>" +
+            (keynoteLang === "en" ? "Toggle this panel" : "开关本面板") +
+            "</dd>" +
+            "<dt>Esc</dt><dd>" +
+            (keynoteLang === "en" ? "Close panel" : "关闭面板") +
+            "</dd>" +
+            "<dt>F</dt><dd>" +
+            (keynoteLang === "en" ? "Fullscreen deck" : "放映区全屏") +
+            "</dd></dl>";
+        }
+      }
+
+      function refreshSlidesMeta() {
+        slides.forEach(function (el, j) {
+          var t = slideLabel(j);
+          el.setAttribute("aria-label", t);
+          var im = el.querySelector("img");
+          if (im) im.alt = t;
+        });
+        filmstripBtns.forEach(function (b, j) {
+          b.title = slideLabel(j);
+          b.setAttribute(
+            "aria-label",
+            uiStr("thumbAriaPrefix") + (j + 1) + (keynoteLang === "zh" ? " 页" : ""),
+          );
+        });
+        dotButtons.forEach(function (b, j) {
+          b.title = slideLabel(j);
+          b.setAttribute(
+            "aria-label",
+            uiStr("dotAriaPrefix") + (j + 1) + uiStr("dotAriaSuffix"),
+          );
+        });
+      }
+
+      var stage = document.getElementById("deckStage");
+      var idx = readInitialIndex();
+      var stack = document.createElement("div");
+      stack.className = "deck-stack";
+      stack.setAttribute("aria-hidden", "false");
+      stage.appendChild(stack);
+
+      function slideHoldMs() {
+        try {
+          var raw = getComputedStyle(document.documentElement).getPropertyValue("--slide-duration").trim();
+          var m = /^([\d.]+)s$/i.exec(raw);
+          if (m) return Math.round(parseFloat(m[1]) * 1000) + 60;
+        } catch (err) {}
+        return 600;
+      }
+
+      var animLock = false;
+      var lockTimer = null;
+      var prefetched = {};
+      var filmstripBtns = [];
+
+      function prefetchNeighbors(i) {
+        [i - 1, i + 1, i + 2].forEach(function (j) {
+          if (j < 0 || j >= total) return;
+          var src = SLIDE_MANIFEST[j].src;
+          if (prefetched[src]) return;
+          prefetched[src] = true;
+          var im = new Image();
+          im.src = src;
+        });
+      }
+
+      function bindFigureLoad(fig, img) {
+        function done() {
+          fig.classList.add("is-loaded");
+        }
+        img.addEventListener("load", done);
+        img.addEventListener("error", function () {
+          fig.classList.add("has-error");
+          fig.classList.add("is-loaded");
+        });
+        if (img.complete && img.naturalWidth > 0) done();
+      }
+
+      SLIDE_MANIFEST.forEach(function (s, i) {
+        var sec = document.createElement("section");
+        sec.className = "slide" + (i === idx ? " is-active" : "");
+        sec.setAttribute("role", "group");
+        sec.setAttribute("aria-roledescription", "slide");
+        sec.setAttribute("aria-label", slideLabel(i));
+        sec.dataset.index = String(i);
+        var fig = document.createElement("figure");
+        var img = document.createElement("img");
+        img.src = s.src;
+        img.alt = slideLabel(i);
+        img.loading = i === idx || Math.abs(i - idx) <= 1 ? "eager" : "lazy";
+        img.decoding = "async";
+        img.fetchPriority = i === idx ? "high" : i === idx + 1 ? "auto" : "low";
+        bindFigureLoad(fig, img);
+        fig.appendChild(img);
+        sec.appendChild(fig);
+        stack.appendChild(sec);
+      });
+
+      var slides = stack.querySelectorAll(".slide");
+      var counter = document.getElementById("slideCounter");
+      var fill = document.getElementById("progressFill");
+      var dotsHost = document.getElementById("railDots");
+      var btnPrev = document.getElementById("btnPrev");
+      var btnNext = document.getElementById("btnNext");
+      var slidePartEl = document.getElementById("slidePart");
+      var slideTitleEl = document.getElementById("slideTitle");
+      var filmstrip = document.getElementById("filmstrip");
+      var filmstripScroll = document.getElementById("filmstripScroll");
+      var dotButtons = [];
+
+      SLIDE_MANIFEST.forEach(function (s, i) {
+        var b = document.createElement("button");
+        b.type = "button";
+        b.title = slideLabel(i);
+        b.setAttribute(
+          "aria-label",
+          uiStr("thumbAriaPrefix") + (i + 1) + (keynoteLang === "zh" ? " 页" : ""),
+        );
+        b.setAttribute("aria-current", i === idx ? "true" : "false");
+        var thumb = document.createElement("img");
+        thumb.src = s.src;
+        thumb.alt = "";
+        thumb.loading = "lazy";
+        thumb.decoding = "async";
+        b.appendChild(thumb);
+        (function (j) {
+          b.addEventListener("click", function () { go(j, true); });
+        })(i);
+        filmstrip.appendChild(b);
+        filmstripBtns.push(b);
+      });
+
+      function updateFilmstrip() {
+        filmstripBtns.forEach(function (b, j) {
+          b.setAttribute("aria-current", j === idx ? "true" : "false");
+        });
+        var cur = filmstripBtns[idx];
+        if (cur && filmstripScroll && typeof cur.scrollIntoView === "function") {
+          cur.scrollIntoView({ inline: "center", behavior: "smooth", block: "nearest" });
+        }
+      }
+
+      function buildDots() {
+        dotsHost.innerHTML = "";
+        dotButtons.length = 0;
+        for (var d = 0; d < total; d++) {
+          var b = document.createElement("button");
+          b.type = "button";
+          b.title = slideLabel(d);
+          b.setAttribute(
+            "aria-label",
+            uiStr("dotAriaPrefix") + (d + 1) + uiStr("dotAriaSuffix"),
+          );
+          b.setAttribute("aria-current", d === idx ? "true" : "false");
+          b.setAttribute("tabindex", d === idx ? "0" : "-1");
+          (function (j) {
+            b.addEventListener("click", function () { go(j, true); });
+          })(d);
+          dotsHost.appendChild(b);
+          dotButtons.push(b);
+        }
+      }
+
+      function updateDots() {
+        dotButtons.forEach(function (b, j) {
+          var on = j === idx;
+          b.setAttribute("aria-current", on ? "true" : "false");
+          b.setAttribute("tabindex", on ? "0" : "-1");
+        });
+      }
+
+      function persistState() {
+        try {
+          history.replaceState(null, "", "#s=" + (idx + 1));
+        } catch (e0) {}
+        try {
+          localStorage.setItem("gridseed-deck-idx", String(idx));
+        } catch (e1) {}
+      }
+
+      function applyChrome() {
+        counter.textContent = idx + 1 + " / " + total;
+        fill.style.width = ((idx + 1) / total * 100).toFixed(2) + "%";
+        btnPrev.disabled = idx === 0;
+        btnNext.disabled = idx === total - 1;
+        slidePartEl.textContent = slideChapter(idx);
+        slideTitleEl.textContent = slideLabel(idx);
+        var pt = document.getElementById("progressTrack");
+        if (pt) {
+          pt.setAttribute("aria-valuenow", String(idx + 1));
+          pt.setAttribute("aria-valuemax", String(total));
+        }
+        var jumpSel = document.getElementById("slideJump");
+        if (jumpSel) {
+          if (jumpSel.options.length !== total) {
+            jumpSel.innerHTML = "";
+            for (var sj = 0; sj < total; sj++) {
+              var opt = document.createElement("option");
+              opt.value = String(sj);
+              opt.textContent = sj + 1 + " — " + slideLabel(sj);
+              jumpSel.appendChild(opt);
+            }
+          } else {
+            for (var jx = 0; jx < total; jx++) {
+              jumpSel.options[jx].textContent = jx + 1 + " — " + slideLabel(jx);
+            }
+          }
+          jumpSel.value = String(idx);
+        }
+        updateDots();
+        updateFilmstrip();
+        persistState();
+      }
+
+      function go(i, force) {
+        var next = Math.max(0, Math.min(total - 1, i));
+        if (next === idx) return;
+        if (!force && animLock) return;
+        if (lockTimer) clearTimeout(lockTimer);
+        if (force) {
+          animLock = false;
+        } else {
+          animLock = true;
+          lockTimer = setTimeout(function () {
+            animLock = false;
+          }, slideHoldMs());
+        }
+        idx = next;
+        slides.forEach(function (el, j) {
+          el.classList.toggle("is-active", j === idx);
+        });
+        applyChrome();
+        prefetchNeighbors(idx);
+      }
+
+      buildDots();
+      btnPrev.addEventListener("click", function () { go(idx - 1); });
+      btnNext.addEventListener("click", function () { go(idx + 1); });
+
+      var helpBackdrop = document.getElementById("helpBackdrop");
+      var helpPanel = document.getElementById("helpPanel");
+      var helpOpen = false;
+
+      function setHelp(open) {
+        helpOpen = open;
+        helpBackdrop.classList.toggle("is-open", open);
+        helpPanel.classList.toggle("is-open", open);
+        helpBackdrop.setAttribute("aria-hidden", open ? "false" : "true");
+        helpPanel.setAttribute("aria-hidden", open ? "false" : "true");
+        if (open) setTimeout(function () { document.getElementById("helpClose").focus(); }, 30);
+      }
+
+      document.getElementById("btnHelp").addEventListener("click", function () { setHelp(!helpOpen); });
+      document.getElementById("helpClose").addEventListener("click", function () { setHelp(false); });
+      helpBackdrop.addEventListener("click", function () { setHelp(false); });
+
+      function scrollToScript() {
+        var det = document.getElementById("scriptDetails");
+        if (det) det.open = true;
+        document.getElementById("editableScript").scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+      document.getElementById("btnScript").addEventListener("click", scrollToScript);
+
+      document.addEventListener("keydown", function (e) {
+        var t = e.target;
+        if (t && (t.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName))) return;
+
+        if (e.key === "Escape" && helpOpen) {
+          e.preventDefault();
+          setHelp(false);
+          return;
+        }
+        if (e.key === "?" || (e.key === "/" && e.shiftKey)) {
+          e.preventDefault();
+          setHelp(!helpOpen);
+          return;
+        }
+        if (e.key === "g" || e.key === "G") {
+          e.preventDefault();
+          scrollToScript();
+          return;
+        }
+        if (helpOpen) return;
+
+        if (e.key === "ArrowRight" || e.key === " " || e.key === "PageDown") {
+          e.preventDefault();
+          go(idx + 1);
+        } else if (e.key === "ArrowLeft" || e.key === "PageUp") {
+          e.preventDefault();
+          go(idx - 1);
+        } else if (e.key === "Home") {
+          e.preventDefault();
+          go(0, true);
+        } else if (e.key === "End") {
+          e.preventDefault();
+          go(total - 1, true);
+        } else if (e.key === "f" || e.key === "F") {
+          e.preventDefault();
+          toggleFs();
+        }
+      });
+
+      window.addEventListener("hashchange", function () {
+        var n = parseHash();
+        if (n !== null && n !== idx) go(n, true);
+      });
+
+      var tx = 0;
+      stage.addEventListener("touchstart", function (e) {
+        tx = e.changedTouches[0].screenX;
+      }, { passive: true });
+      stage.addEventListener("touchend", function (e) {
+        var dx = e.changedTouches[0].screenX - tx;
+        if (dx < -48) go(idx + 1);
+        else if (dx > 48) go(idx - 1);
+      }, { passive: true });
+
+      function toggleFs() {
+        var root = document.getElementById("deckRoot");
+        var active = document.fullscreenElement || document.webkitFullscreenElement;
+        if (!active) {
+          var req = root.requestFullscreen || root.webkitRequestFullscreen || root.msRequestFullscreen;
+          if (req) req.call(root);
+        } else {
+          var exit = document.exitFullscreen || document.webkitExitFullscreen || document.msExitFullscreen;
+          if (exit) exit.call(document);
+        }
+      }
+      document.getElementById("btnFs").addEventListener("click", toggleFs);
+
+      var slideJumpEl = document.getElementById("slideJump");
+      if (slideJumpEl && !slideJumpEl._gsBound) {
+        slideJumpEl._gsBound = true;
+        slideJumpEl.addEventListener("change", function () {
+          go(parseInt(slideJumpEl.value, 10), true);
+        });
+      }
+
+      document.getElementById("langZh").addEventListener("click", function () {
+        setKeynoteLang("zh");
+      });
+      document.getElementById("langEn").addEventListener("click", function () {
+        setKeynoteLang("en");
+      });
+
+      setKeynoteLang(keynoteLang);
+      prefetchNeighbors(idx);
+    })();
+  </script>
+</body>
+</html>
