@@ -17,6 +17,17 @@
 
 ---
 
+## 🔗 Quick links · 快速链接
+
+| Resource · 资源 | URL |
+|-----------------|-----|
+| GitHub repository · 仓库 | [https://github.com/sherryyu11902-del/Grid-Seed](https://github.com/sherryyu11902-del/Grid-Seed) |
+| YouTube demo · 演示视频 | [https://youtu.be/SJhbgNIRQWg?si=bapGSPzX-HwuL5NX](https://youtu.be/SJhbgNIRQWg?si=bapGSPzX-HwuL5NX) |
+| GitHub Pages (keynote) · 在线演示稿 | [https://sherryyu11902-del.github.io/Grid-Seed/gridseed-keynote-presentation.html](https://sherryyu11902-del.github.io/Grid-Seed/gridseed-keynote-presentation.html) |
+| Google Drive · 完整工程与大文件 | [https://drive.google.com/drive/folders/1T_6NwHcBHyanICBKk7rAbWRlQ8Gqflaj?usp=drive_link](https://drive.google.com/drive/folders/1T_6NwHcBHyanICBKk7rAbWRlQ8Gqflaj?usp=drive_link) |
+
+---
+
 ## 📖 Project overview · 项目简介
 
 | **English** | **中文** |
@@ -45,40 +56,6 @@
 | **Download** — Use this folder to get **`gridseed-illustrator-plugin copy 2_副本`** (full plugin tree) and other shared assets, then install the extension per the CEP workflow for your OS. | **下载** — 请从下列 **Google Drive 资料夹** 下载 **`gridseed-illustrator-plugin copy 2_副本`** 等完整内容，按 **CEP 扩展安装流程** 置入 **Adobe Illustrator** 使用。 |
 
 👉 **[Google Drive — Grid Seed 资料夹](https://drive.google.com/drive/folders/1T_6NwHcBHyanICBKk7rAbWRlQ8Gqflaj?usp=drive_link)**
-
----
-
-## 📷 Rich README (HTML) · 图文并茂说明（相对路径、不丢链）
-
-**English:** For an **offline-friendly HTML copy** of this README with the same messaging and **local `<img>` paths** (no hotlinking to Drive), open **`README.html`** in the repo root. Place screenshots as `docs/readme-assets/screen-03.png` … `screen-08.png` (rename from Drive `3.png`–`8.png`; see `docs/readme-assets/README.md`).
-
-**中文：** 根目录另有 **`README.html`**：版式阅读 + **仓库内相对路径插图**（不依赖 Google 图片直链，避免失效）。请将要展示的图放入 **`docs/readme-assets/`**，命名 **`screen-03.png` … `screen-08.png`**（与网盘中 `3.png`–`8.png` 对应），详见该目录下说明。
-
-**GitHub renders (after you add the PNG files):**
-
-<p align="center">
-<img src="docs/readme-assets/screen-03.png" width="32%" alt="GridSeed screen 03" />
-<img src="docs/readme-assets/screen-04.png" width="32%" alt="GridSeed screen 04" />
-<img src="docs/readme-assets/screen-05.png" width="32%" alt="GridSeed screen 05" />
-</p>
-<p align="center">
-<img src="docs/readme-assets/screen-06.png" width="32%" alt="GridSeed screen 06" />
-<img src="docs/readme-assets/screen-07.png" width="32%" alt="GridSeed screen 07" />
-<img src="docs/readme-assets/screen-08.png" width="32%" alt="GridSeed screen 08" />
-</p>
-
----
-
-## ✨ Features · 特性
-
-| **English** | **中文** |
-|-------------|----------|
-| 📐 **Template library** — Many preset sizes (print CMYK + screen RGB) with categories in `js/data.js`, wired to `jsx/hostscript.jsx`. | 📐 **模板库** — 多种印刷 / 屏显尺寸预设（数据于 `js/data.js`，与 `jsx/hostscript.jsx` 联动）。 |
-| 🧭 **Grid Composer** — Paper/screen, bleed & safe margins, image slots, themes; preview and dispatch to Illustrator via `CSInterface` + ExtendScript. | 🧭 **网格编排** — 画幅、出血与安全区、图位、主题；通过 `CSInterface` 与 ExtendScript 下发到 Illustrator。 |
-| 📝 **Words** — Placeholder copy generation tuned to layout rhythm (refine in-app). | 📝 **Words** — 与网格节奏协调的占位文案生成（可在面板内继续打磨）。 |
-| 🌐 **Bilingual UI** — **English / 中文** toggle in the panel (`js/i18n.js`, `data-i18n`); keynote page also switches language. | 🌐 **双语界面** — 面板顶部 **English / 中文**（`js/i18n.js`）；演示网页同样可切换语言。 |
-| 📊 **Web deck & GitHub Pages** — Full-screen slides + speaker notes in `gridseed-keynote-presentation.html` + `presentation-assets/`. | 📊 **网页演示与 GitHub Pages** — `gridseed-keynote-presentation.html` 与 `presentation-assets/` 提供全屏幻灯片与讲稿区。 |
-| 🛠️ **Optional Python tooling** — `scripts/` can build bilingual PPTX assets (`python-pptx`, Pillow); see **Optional: Python venv for PPTX tooling** below. | 🛠️ **可选 Python 工具链** — `scripts/` 可用于生成双语 PPTX 相关资源（见下文 **可选：PPTX 构建环境**）。 |
 
 ---
 
@@ -111,11 +88,11 @@
 | **Install** | Copy or symlink this project folder into your OS-specific **CEP extensions** directory; restart Illustrator if needed. | 将本项目文件夹复制或符号链接到系统对应的 **CEP 扩展目录**；必要时重启 Illustrator。 |
 | **Open** | **Window → Extensions → GridSeed** (menu label from `manifest.xml`). | 菜单 **Window（窗口）→ Extensions（扩展）→ GridSeed**（与 `manifest.xml` 一致）。 |
 
-### 2) Preview the keynote locally · 本地预览演示网页
+### 2) Preview in the browser · 本地预览（面板 + 演示稿）
 
-**English:** Serves static files so slide images and paths resolve correctly.
-
-**中文：** 通过静态服务器打开，以保证幻灯片图片路径正确。
+| | **English** | **中文** |
+|---|-------------|----------|
+| **Tip** | Start a local static server, then open **`index.html`** to preview the **Illustrator panel UI** (same front-end as in CEP). Open **`gridseed-keynote-presentation.html`** for the slide deck and speaker notes (needs `presentation-assets/` next to it). | 在项目根目录启动本地静态服务后，在浏览器打开 **`index.html`** 即可**直接预览插件面板界面**（与 CEP 内一致的前端布局与交互示意）。打开 **`gridseed-keynote-presentation.html`** 可预览演示稿（需与同级的 **`presentation-assets/`** 一起使用）。 |
 
 ```bash
 # Clone / 克隆
@@ -124,8 +101,8 @@ cd Grid-Seed
 
 # Local server / 本地服务（Python 3）
 python3 -m http.server 8765
-# Open / 浏览器打开：
-# http://localhost:8765/gridseed-keynote-presentation.html
+# Panel UI preview · 插件面板预览： http://localhost:8765/index.html
+# Keynote deck · 演示稿：           http://localhost:8765/gridseed-keynote-presentation.html
 ```
 
 ---
@@ -169,10 +146,8 @@ cs.evalScript('gridseed_dispatch("' + escapedPayload + '")', callback);
 | Path · 路径 | **English** | **中文** |
 |-------------|-------------|----------|
 | `presentation-assets/` | Slide bitmaps `slide-01.jpg` … `slide-22.jpg`, poster image, etc. | 幻灯片资源，如 `slide-01.jpg` … `slide-22.jpg` 等。 |
-| `scripts/` | Optional: `build_gridseed_presentation.py`, `pptx_requirements.txt`, build caches. | 可选：演示稿构建脚本、PPTX 依赖与缓存目录。 |
+| `scripts/` | Optional build scripts and caches for presentations. | 可选：演示相关脚本与缓存目录。 |
 | `排版网格预览.html` | Standalone layout preview page (Chinese filename). | 独立「排版网格预览」页面。 |
-| `README.html` | Bilingual “rich README” with local screenshot paths under `docs/readme-assets/`. | 图文并茂的 README 网页版，插图走仓库相对路径。 |
-| `docs/readme-assets/` | Screenshots `screen-03.png` … `screen-08.png` for README / README.html (copy from Drive). | README 配图目录（从网盘复制并按要求命名）。 |
 | `.gitignore` | Excludes large `.MOV`, venvs, logs, `.cursor/` (if present). | 忽略大体积 `.MOV`、虚拟环境、日志等。 |
 
 > **Note · 说明** — There is **no root `package.json`**: runtime is the CEP stack (Chromium panel + ExtendScript), not Node/npm for the shipped extension.
@@ -186,36 +161,8 @@ cs.evalScript('gridseed_dispatch("' + escapedPayload + '")', callback);
 | Host · 宿主 | Adobe Illustrator **CEP** / **ExtendScript (JSX)** | Illustrator **CEP** / **ExtendScript (JSX)** |
 | Panel UI · 面板 | HTML5, CSS3, ES5-style JavaScript (CEP-compatible) | HTML5、CSS3、兼容 CEP 的 JavaScript（偏 ES5 风格） |
 | Bridge · 桥接 | `CSInterface.evalScript` | `CSInterface.evalScript` |
-| Docs / decks · 文稿 | Static HTML; optional **Python 3** + `python-pptx`, Pillow (`scripts/pptx_requirements.txt`) | 静态 HTML；可选 **Python 3** + `python-pptx`、Pillow |
-| Distribution · 分发 | Git + **GitHub**; **GitHub Pages** for keynote | Git + **GitHub**；演示站用 **GitHub Pages** |
-
-### Optional: Python venv for PPTX tooling · 可选：PPTX 构建环境
-
-**English:**
-
-```bash
-python3 -m venv .pptx_venv
-.pptx_venv/bin/pip install -r scripts/pptx_requirements.txt
-# Then run scripts as needed per scripts/*.py
-```
-
-**中文：**
-
-```bash
-python3 -m venv .pptx_venv
-.pptx_venv/bin/pip install -r scripts/pptx_requirements.txt
-# 再按需运行 scripts/ 下的脚本
-```
-
----
-
-## 🎤 Presentation workflow with Cursor · 演示与 Cursor 协作说明
-
-| **English** | **中文** |
-|-------------|----------|
-| We used **Cursor** to accelerate the **presentation layer**: with a **markdown (or structured) design brief** explaining **concept, goals, UI/UX decisions, user flow, and visual hierarchy**, the AI assistant can help produce **slide outlines**, **speaker notes**, export-friendly **HTML**, and suggestions for **PDF / SVG / PNG** exports. | 我们使用 **Cursor** 辅助完成 **演示文稿相关产出**：若提供说明 **概念、目标、UI/UX 决策、用户路径与视觉层级** 的 **Markdown（或结构化）设计说明**，AI 可协助生成 **幻灯片大纲**、**讲稿**、便于导出的 **HTML**，以及 **PDF / SVG / PNG** 导出流程上的建议。 |
-| Ask Cursor to scaffold a **GitHub Pages**-ready site (static `index` or `gridseed-keynote-presentation.html`) and to keep assets under `presentation-assets/`. | 可让 Cursor 帮助搭建适合 **GitHub Pages** 的静态站点（例如项目根目录下的演示 HTML），并将图片等资源放在 `presentation-assets/`。 |
-| **Speaking tip:** keep one source of truth for your design rationale (short doc), then iterate slides and README in sync. | **发言建议：** 以一份简短 **设计过程文档** 为「单一事实来源」，再同步迭代幻灯片与 README，便于课堂展示与互评。 |
+| Docs / decks · 文稿 | Static HTML; GitHub Pages for keynote | 静态 HTML；演示稿可托管于 GitHub Pages |
+| Distribution · 分发 | Git + **GitHub** | Git + **GitHub** |
 
 ---
 
@@ -248,15 +195,15 @@ python3 -m venv .pptx_venv
 
 ---
 
-## 🔗 Quick links · 快速链接
+## ✨ Features · 特性
 
-| Resource · 资源 | URL |
-|-----------------|-----|
-| GitHub repository · 仓库 | [https://github.com/sherryyu11902-del/Grid-Seed](https://github.com/sherryyu11902-del/Grid-Seed) |
-| YouTube demo · 演示视频 | [https://youtu.be/SJhbgNIRQWg?si=bapGSPzX-HwuL5NX](https://youtu.be/SJhbgNIRQWg?si=bapGSPzX-HwuL5NX) |
-| GitHub Pages (keynote) · 在线演示 | [https://sherryyu11902-del.github.io/Grid-Seed/gridseed-keynote-presentation.html](https://sherryyu11902-del.github.io/Grid-Seed/gridseed-keynote-presentation.html) |
-| Google Drive · 完整工程与大文件 | [https://drive.google.com/drive/folders/1T_6NwHcBHyanICBKk7rAbWRlQ8Gqflaj?usp=drive_link](https://drive.google.com/drive/folders/1T_6NwHcBHyanICBKk7rAbWRlQ8Gqflaj?usp=drive_link) |
-| Rich README (HTML) · 本地插图版 | 仓库根目录 [`README.html`](README.html)（配合 `docs/readme-assets/`） |
+| **English** | **中文** |
+|-------------|----------|
+| 📐 **Template library** — Many preset sizes (print CMYK + screen RGB) with categories in `js/data.js`, wired to `jsx/hostscript.jsx`. | 📐 **模板库** — 多种印刷 / 屏显尺寸预设（数据于 `js/data.js`，与 `jsx/hostscript.jsx` 联动）。 |
+| 🧭 **Grid Composer** — Paper/screen, bleed & safe margins, image slots, themes; preview and dispatch to Illustrator via `CSInterface` + ExtendScript. | 🧭 **网格编排** — 画幅、出血与安全区、图位、主题；通过 `CSInterface` 与 ExtendScript 下发到 Illustrator。 |
+| 📝 **Words** — Placeholder copy generation tuned to layout rhythm (refine in-app). | 📝 **Words** — 与网格节奏协调的占位文案生成（可在面板内继续打磨）。 |
+| 🌐 **Bilingual UI** — **English / 中文** toggle in the panel (`js/i18n.js`, `data-i18n`); keynote page also switches language. | 🌐 **双语界面** — 面板顶部 **English / 中文**（`js/i18n.js`）；演示网页同样可切换语言。 |
+| 📊 **Web deck & GitHub Pages** — Full-screen slides + speaker notes in `gridseed-keynote-presentation.html` + `presentation-assets/`. | 📊 **网页演示与 GitHub Pages** — `gridseed-keynote-presentation.html` 与 `presentation-assets/` 提供全屏幻灯片与讲稿区。 |
 
 ---
 
