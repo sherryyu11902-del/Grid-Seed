@@ -22,6 +22,8 @@
 | Resource · 资源 | URL |
 |-----------------|-----|
 | GitHub repository · 仓库 | [https://github.com/sherryyu11902-del/Grid-Seed](https://github.com/sherryyu11902-del/Grid-Seed) |
+| **`index.html` — Panel UI (GitHub Pages)** · **插件面板在线打开** | [**https://sherryyu11902-del.github.io/Grid-Seed/index.html**](https://sherryyu11902-del.github.io/Grid-Seed/index.html) |
+| **`index.html` — source on GitHub** · **仓库内源文件** | [github.com/…/blob/main/index.html](https://github.com/sherryyu11902-del/Grid-Seed/blob/main/index.html) |
 | YouTube demo · 演示视频 | [https://youtu.be/SJhbgNIRQWg?si=bapGSPzX-HwuL5NX](https://youtu.be/SJhbgNIRQWg?si=bapGSPzX-HwuL5NX) |
 | GitHub Pages (keynote) · 在线演示稿 | [https://sherryyu11902-del.github.io/Grid-Seed/gridseed-keynote-presentation.html](https://sherryyu11902-del.github.io/Grid-Seed/gridseed-keynote-presentation.html) |
 | Google Drive · 完整工程与大文件 | [https://drive.google.com/drive/folders/1T_6NwHcBHyanICBKk7rAbWRlQ8Gqflaj?usp=drive_link](https://drive.google.com/drive/folders/1T_6NwHcBHyanICBKk7rAbWRlQ8Gqflaj?usp=drive_link) |
@@ -72,8 +74,9 @@
 
 | **English** | **中文** |
 |-------------|----------|
-| After enabling **Settings → Pages** (source: branch **`main`**, folder **`/`**), open the keynote: | 在仓库 **Settings → Pages** 中启用站点（分支 **`main`**，目录 **`/`** 根目录）后，访问： |
-| 👉 [https://sherryyu11902-del.github.io/Grid-Seed/gridseed-keynote-presentation.html](https://sherryyu11902-del.github.io/Grid-Seed/gridseed-keynote-presentation.html) | 👉 [https://sherryyu11902-del.github.io/Grid-Seed/gridseed-keynote-presentation.html](https://sherryyu11902-del.github.io/Grid-Seed/gridseed-keynote-presentation.html) |
+| After enabling **Settings → Pages** (source: branch **`main`**, folder **`/`**), you can open: | 在仓库 **Settings → Pages** 中启用站点（分支 **`main`**，目录 **`/`** 根目录）后，可直接访问： |
+| **Plugin panel (`index.html`):** [https://sherryyu11902-del.github.io/Grid-Seed/index.html](https://sherryyu11902-del.github.io/Grid-Seed/index.html) | **插件面板（`index.html`）：** [https://sherryyu11902-del.github.io/Grid-Seed/index.html](https://sherryyu11902-del.github.io/Grid-Seed/index.html) |
+| **Keynote deck:** [https://sherryyu11902-del.github.io/Grid-Seed/gridseed-keynote-presentation.html](https://sherryyu11902-del.github.io/Grid-Seed/gridseed-keynote-presentation.html) | **演示稿（keynote）：** [https://sherryyu11902-del.github.io/Grid-Seed/gridseed-keynote-presentation.html](https://sherryyu11902-del.github.io/Grid-Seed/gridseed-keynote-presentation.html) |
 | *If you see **404**, push all files to `main`, enable Pages, wait 1–3 minutes; GitHub may lowercase the repo segment in the URL.* | *若出现 **404**，请确认已推送到 `main`、已开启 Pages，并等待 1–3 分钟；URL 中的仓库名可能会被转为小写。* |
 
 ---
@@ -92,7 +95,7 @@
 
 | | **English** | **中文** |
 |---|-------------|----------|
-| **Tip** | Start a local static server, then open **`index.html`** to preview the **Illustrator panel UI** (same front-end as in CEP). Open **`gridseed-keynote-presentation.html`** for the slide deck and speaker notes (needs `presentation-assets/` next to it). | 在项目根目录启动本地静态服务后，在浏览器打开 **`index.html`** 即可**直接预览插件面板界面**（与 CEP 内一致的前端布局与交互示意）。打开 **`gridseed-keynote-presentation.html`** 可预览演示稿（需与同级的 **`presentation-assets/`** 一起使用）。 |
+| **Tip** | **One-click (online):** after GitHub Pages is on, open **[`index.html` on Pages](https://sherryyu11902-del.github.io/Grid-Seed/index.html)** to preview the panel UI in the browser. **Local:** run a static server, then open **`index.html`** and **`gridseed-keynote-presentation.html`** (keynote needs `presentation-assets/`). | **在线直开：** 开启 GitHub Pages 后，点击 [**Pages 上的 `index.html`**](https://sherryyu11902-del.github.io/Grid-Seed/index.html) 即可在浏览器中打开**插件面板界面**。**本地：** 启动静态服务后打开 **`index.html`**；演示稿打开 **`gridseed-keynote-presentation.html`**（需同级 **`presentation-assets/`**）。 |
 
 ```bash
 # Clone / 克隆
@@ -101,7 +104,7 @@ cd Grid-Seed
 
 # Local server / 本地服务（Python 3）
 python3 -m http.server 8765
-# Panel UI preview · 插件面板预览： http://localhost:8765/index.html
+# Panel UI preview · 插件面板预览：" http://localhost:8765/index.html
 # Keynote deck · 演示稿：           http://localhost:8765/gridseed-keynote-presentation.html
 ```
 
