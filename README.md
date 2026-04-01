@@ -17,6 +17,15 @@
 
 ---
 
+## Authors · 作者
+
+| English name | 中文名 | Student ID · 学号 |
+|--------------|--------|-------------------|
+| Tina Lai | 赖紫傲 | MC569209 |
+| Sheryn Wang | 王筱钰 | MC569019 |
+
+---
+
 ## Repository layout · 仓库布局说明
 
 | English | 中文 |
@@ -179,15 +188,6 @@ cs.evalScript('gridseed_dispatch("' + escapedPayload + '")', callback);
 
 **EN:** Illustrator **CEP** + **ExtendScript (JSX)**; panel **HTML / CSS / ES5-style JS**; bridge **`CSInterface.evalScript`**.  
 **中文：** Illustrator **CEP** + **ExtendScript (JSX)**；面板 **HTML / CSS / ES5 风格 JS**；桥接 **`CSInterface.evalScript`**。
-
----
-
-## Authors · 作者
-
-| English name | 中文名 | Student ID · 学号 |
-|--------------|--------|-------------------|
-| Tina Lai | 赖紫傲 | MC569209 |
-| Sheryn Wang | 王筱钰 | MC569019 |
 
 ---
 
